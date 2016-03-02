@@ -52,38 +52,42 @@ http://ec2-MY-PUBLIC-IP-ADDRESS.us-west-2.compute.amazonaws.com/
     3.	git config --global user.name "Nicolas H"
     4.	git clone https://github.com/Afkupuz/catalog
   
-In order to get the app running on the server I needed to make some adjustments. Firstly, the app was originally using MySQL via sqlalchemy. I needed to have a user configured in psql that has permissions to access the database and edit it.
-I followed https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps for extra help
-Instead of __init__.py I changed my project.py to init.py
-Then I had to change the database to use psql and provide a user name, password and database to use:
-	engine = create_engine('postgresql+psycopg2://USERNAME:PASSWORD@localhost/DATABASENAME)
-This has to be changed in both my database_setup and my project.py files.
-Once done, I was able to run ‘python project.py’ and I was given a series of errors that dealt with missing modules that I installed using pip
+In order to get the app running on the server I needed to make some adjustments. Firstly, the app was originally using MySQL via sqlalchemy. I needed to have a user configured in psql that has permissions to access the database and edit it.  
+  
+I followed https://www.digitalocean.com/community/tutorials/how-to-deploy-a-flask-application-on-an-ubuntu-vps for extra help  
+Instead of __init__.py I changed my project.py to init.py  
+Then I had to change the database to use psql and provide a user name, password and database to use:  
+	engine = create_engine('postgresql+psycopg2://USERNAME:PASSWORD@localhost/DATABASENAME)  
+This has to be changed in both my database_setup and my project.py files.  
+  
+Once done, I was able to run ‘python project.py’ and I was given a series of errors that dealt with missing modules that I installed using pip  
+
 Now I have the project running:
  * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
  * Restarting with stat
  * Debugger is active!
  * Debugger pin code: 261-080-655 
-And I can’t access localhost port 5000 on the server, SO
-I checked sudo a2ensite catalog, this returned that catalog was already running. This means that I correctly inserted my catalog.conf file into the sites-available folder in apache2 directory
-I checked sudo a2enconf catalog, this returned that no catalog.conf was there. So I copied the file catalog.conf from the sites-available to the conf-available and ran it again. (note, as soon as a2enconf catalog was working, my main site went down, to bring it back I put sudo a2disconf catalog and restarted)
-It still wasn’t working so I checked /var/log/apache2/error.log for what was going on. It showed that there was an issue with python.eggs. To fix this I created a directory mkdir /var/www/.python-eggs and make it accessible to all with chmod 777 /var/www/.python-eggs.
+  
+And I can’t access localhost port 5000 on the server, SO...  
+I checked sudo a2ensite catalog, this returned that catalog was already running. This means that I correctly inserted my catalog.conf file into the sites-available folder in apache2 directory  
+I checked sudo a2enconf catalog, this returned that no catalog.conf was there. So I copied the file catalog.conf from the sites-available to the conf-available and ran it again. (note, as soon as a2enconf catalog was working, my main site went down, to bring it back I put sudo a2disconf catalog and restarted)  
+It still wasn’t working so I checked /var/log/apache2/error.log for what was going on. It showed that there was an issue with python.eggs. To fix this I created a directory mkdir /var/www/.python-eggs and make it accessible to all with chmod 777 /var/www/.python-eggs.  
+  
+Now that everything is arranged, I visited the website and IT WORKS!!! BUT the CSS returns a 404 and the Oauth2 doesn’t work.  
+  
+To fix the OAuth2 I had to open the options in my original google app engine project and add the new website as an authorized user. But the website is not finding the secrets folder so I needed to add the full path to the file in the code.  
+  
+Facebook login doesn’t work either… I had to log in to facebook developer and change my apps URL to the new one.  
+  
+CSS wasn’t working because in the .conf file I had the path …/catalog/catalog/static but I moved things so it needed to be …/catalog/static  
+  
+##Logging in and Visiting
+Visit:  
+http://ec2-52-36-143-65.us-west-2.compute.amazonaws.com/  
 
-Now that everything is arranged, I visited the website and IT WORKS!!! BUT the CSS returns a 404 and the Oauth2 doesn’t work.
-
-To fix the OAuth2 I had to open the options in my original google app engine project and add the new website as an authorized user. But the website is not finding the secrets folder so I needed to add the full path to the file in the code.
-
-Facebook login doesn’t work either… I had to log in to facebook developer and change my apps URL to the new one.
-
-CSS wasn’t working because in the .conf file I had the path …/catalog/catalog/static but I moved things so it needed to be …/catalog/static
+Logging in:
+SSH into the account via the terminal (MacOS) and with a key pair.
 
 
-
-
-
-You may also find this Getting Started Guide helpful when working on Project 5.
-
-
-ssh -i ~/.ssh/udacity_key.rsa root@52.36.143.65 -p 2200
 
 
