@@ -82,11 +82,44 @@ Facebook login doesn’t work either… I had to log in to facebook developer an
 CSS wasn’t working because in the .conf file I had the path …/catalog/catalog/static but I moved things so it needed to be …/catalog/static  
   
 ##Logging in and Visiting
-Visit:  
-http://ec2-52-36-143-65.us-west-2.compute.amazonaws.com/  
+Visit: http://ec2-52-36-143-65.us-west-2.compute.amazonaws.com/  
 
 Logging in:
-SSH into the account via the terminal (MacOS) and with a key pair.
+SSH into the account via the terminal (MacOS) and with a key pair.  
+IP address: 52.36.143.65  
+Port: 2200  
+
+##Software Installed
+Updates  
+Finger  
+Apache2  
+libapache2-mod-wsgi  
+python ez_setup.py  
+SQLAlchemy  
+Postgresql  
+Ntp  
+Glances  
+Pip  
+Virtualen  
+Virtualenv  
+Git  
+Flask  
+openssh-server  
+python-virtualenv  
+--upgrade oauth2client  
+Flask-XML-RPC  
+flask==0.9  
+werkzeug==0.8.3  
+fail2ban  
+nginx  
+sendmail  
+iptables-persistent  
+
+##Additions
+Glances - a program that monitors activity and can raise alerts  
+fail2ban - Bans people from logging in if they fail too many times  
+set up following https://www.digitalocean.com/community/tutorials/how-to-protect-ssh-with-fail2ban-on-ubuntu-14-04
+
 
 
 
