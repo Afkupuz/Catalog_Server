@@ -6,6 +6,7 @@ from functools import wraps
 from flaskext.xmlrpc import XMLRPCHandler, Fault
 
 # imports for login function
+import psycopg2
 
 from flask import session as login_session
 import random, string
