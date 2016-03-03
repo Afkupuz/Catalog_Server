@@ -497,5 +497,5 @@ def censor(subjects_id, response_id):
 
 if __name__ == '__main__':
     app.secret_key = 'SDUsdG2264tI&SD78godo3rP(*dorh2o928#$g3GFGSFG73rwd3122e4tgr3faw4wyhgOKIY78di3d'
-    app.debug = True
+    app.debug = False
     app.run()
